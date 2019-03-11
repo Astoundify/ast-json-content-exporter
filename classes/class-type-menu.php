@@ -17,9 +17,6 @@ class Type_Menu extends Base_Type {
 
 			$menu_obj = wp_get_nav_menu_object( $id );
 
-			// var_dump( $location );
-			// var_dump( $menu_obj );
-
 			$out[ $location ] = [
 				'id'   => $location,
 				'type' => 'nav-menu',

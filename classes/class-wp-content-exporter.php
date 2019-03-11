@@ -10,7 +10,6 @@ namespace AST\Content_Importer;
  * @since 1.0.0
  */
 class WP_Submenu_Page {
- 
     private $types = array();
 
     private $current_type = null;
@@ -32,7 +31,9 @@ class WP_Submenu_Page {
             'product',
             'term',
             'user',
-            'vendor'
+            'vendor',
+            'thememod',
+            'setting'
         );
 
         if ( isset( $_GET['display_type'] ) && in_array( $_GET['display_type'], $this->types ) ) {

@@ -23,7 +23,7 @@ class Type_Menu_Items extends Base_Type {
 				$out = array();
 				$out['id'] = $item->post_name;
 				$out['type'] = 'nav-menu-item';
-				$out['priority'] = 0;
+				// $out['priority'] = 0;
 				$out['data']['menu_name'] = $menu->name;
 				$out['data']['menu-item-title'] = $item->title;
 
@@ -31,28 +31,30 @@ class Type_Menu_Items extends Base_Type {
 					$out['data']['menu-item-object-title'] = $item->title;
 				}
 
+				
 				// _menu_item_object_id
-				if ( ! empty( $meta['_menu_item_object_id'] ) ) {
-					$out['data']['menu-item-object-id'] = $meta['_menu_item_object_id'][0];
-				}
+				// if ( ! empty( $meta['_menu_item_object_id'] ) ) {
+				// 	$out['data']['menu-item-object-id'] = $meta['_menu_item_object_id'][0];
+				// }
 				
 				if ( ! empty( $meta['_menu_item_type'] ) ) {
 					
-					$out['data']['menu-item-type'] = $meta['_menu_item_type'][0];
+					//$out['data']['menu-item-type'] = $meta['_menu_item_type'][0];
 
-					if ( $meta['_menu_item_type'][0] === 'post_type' ) {
-						$out['data']['menu-item-object'] = $item->object;
-					} elseif ( $meta['_menu_item_type'][0] === 'taxonomy' ) {
-						$out['data']['menu-item-object'] = $item->object;
-					}
+					// if ( $meta['_menu_item_type'][0] === 'post_type' ) {
+					// 	$out['data']['menu-item-object'] = $item->object;
+					// } elseif ( $meta['_menu_item_type'][0] === 'taxonomy' ) {
+					// 	$out['data']['menu-item-object'] = $item->object;
+					// }
 
 				} else {
-					$out['data']['menu-item-type'] = 'custom';
+					
 				}
-
+				$out['data']['menu-item-type'] = 'custom';
 				if ( ! empty( $meta['_menu_item_url'][0] ) ) {
 					$out['data']['menu-item-url'] = $meta['_menu_item_url'][0];
 				}
+				$out['data']['menu-item-url'] = '#';
 
 				$out['data']['menu-item-position'] = $item->menu_order;
 
