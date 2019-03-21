@@ -12,7 +12,6 @@ abstract class Base_Type {
 	}
 
 	function display_data() {
-		
 		$data = $this->get_data();
 
 		if ( empty( $data ) ) {
@@ -21,14 +20,14 @@ abstract class Base_Type {
 		<div>
 			<textarea disabled="disabled" style="width: 80vw;height: 80vh;"><?php
 			// $data = wp_slash($data);
-			$data = json_encode($data, JSON_PRETTY_PRINT);
+			$data = json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES );
 			$data = htmlspecialchars( $data, ENT_QUOTES, 'UTF-8' );
 			print_r($data);
 			?></textarea>
 		</div>
 	<?php }
 
-		/**
+	/**
 	 * Search and return posible menu entries for a certain post.
 	 */
 	function get_menu_entry( $post_cache ){
@@ -152,14 +151,20 @@ abstract class Base_Type {
 		if ( $meta['_menu_item_type'][0] === 'taxonomy' ) {
 			$out['menu-item-object'] = $item->object;
 		}
-
+		
 		$out['menu-item-type'] = $meta['_menu_item_type'][0];
+
 		if ( ! empty( $meta['_menu_item_url'][0] ) ) {
-			$out['menu-item-url'] = $meta['_menu_item_url'][0];
+
+			if ( false !== strpos( $meta['_menu_item_url'][0], site_url() ) ) {
+				$out['menu-item-endpoint'] = str_replace(\site_url(), '', $meta['_menu_item_url'][0] );
+			} else {
+				$out['menu-item-url'] = $meta['_menu_item_url'][0];
+			}
+
 		} elseif ( $meta['_menu_item_type'][0] === 'custom' ) {
 			$out['menu-item-url'] = '#';
 		}
-
 		$out['menu-item-position'] = $item->menu_order;
 
 		if ( ! empty( $item->classes ) ) {
