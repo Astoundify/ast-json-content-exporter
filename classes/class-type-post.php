@@ -42,7 +42,7 @@ class Type_Post extends Base_Type {
 				$out[ 'data' ]['featured_image'] = $placeholder;
 				$out[ 'data' ]['media'] = [ $placeholder ];
 			}
-			
+
 			$menus = $this->get_menu_entry( $post );
 
 			if ( ! empty( $menus ) ) {
@@ -51,6 +51,7 @@ class Type_Post extends Base_Type {
 
 			$posts_array[] = $out;
 		}
+
 		return $this->replace_images_with_placeholder( $posts_array );
 	}
 }

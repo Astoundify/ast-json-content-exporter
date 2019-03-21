@@ -31,4 +31,4 @@
 	new AST\Content_Importer\WP_Submenu_Page();
 
  }
- add_action( 'init', 'ast_init_content_exporters' );
+ add_action( 'plugins_loaded', 'ast_init_content_exporters', 0 );

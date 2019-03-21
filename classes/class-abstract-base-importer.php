@@ -137,13 +137,14 @@ abstract class Base_Type {
 		if ( $meta === null ) {
 			$meta = get_post_meta( $item->ID );
 		}
+		
+		$item = wp_setup_nav_menu_item( $item );
 
-		// $out['priority'] = 0;
 		$out['menu_name'] = $menu->name;
 		$out['menu-item-title'] = $item->post_title;
 
-		if ( ! empty( $item->post_title ) ) {
-			$out['menu-item-object-title'] = $item->post_title;
+		if ( ! empty( $item->title ) ) {
+			$out['menu-item-object-title'] = $item->title;
 		}
 		
 		$out['menu-item-type'] = $meta['_menu_item_type'][0];
@@ -167,7 +168,7 @@ abstract class Base_Type {
 		}
 		$out['menu-item-position'] = $item->menu_order;
 
-		if ( ! empty( $item->classes ) ) {
+		if ( ! empty( $item->classes ) && ( is_array( $item->classes ) && ! empty( $item->classes[0] ) ) ) { // var_dump( $item->classes );
 			$out['menu-item-classes'] = $item->classes;
 		}
 
