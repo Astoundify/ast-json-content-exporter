@@ -20,6 +20,10 @@
   * Init the plugins
   */
  function ast_init_content_exporters(){
+	if ( ! is_admin() ) {
+		return;
+	}
+	
 	foreach (glob( plugin_dir_path( __FILE__ ) . "/classes/class-wp*.php" ) as $filename) {
 		include_once $filename;
 	}
