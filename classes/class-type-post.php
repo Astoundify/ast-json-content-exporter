@@ -10,11 +10,11 @@ class Type_Post extends Base_Type {
 
 	function get_data() {
 		$placeholder = $this->get_placeholder();
-		// $placeholder_escaped = 'http:\/\/sandbox-vendify-demos.astoundify.com\/democontent\/wp-content\/uploads\/sites\/8\/2019\/02\/gabrielle-henderson-1375813-unsplash.jpg';
-		
+
 		$args = array(
 			'post_type' => 'post',
-			'post_status' => array('publish' )    
+			'post_status' => array('publish' ),
+			'posts_per_page' => -1
 		);
 		$loop = new \WP_Query($args);
 	
@@ -42,27 +42,15 @@ class Type_Post extends Base_Type {
 				$out[ 'data' ]['featured_image'] = $placeholder;
 				$out[ 'data' ]['media'] = [ $placeholder ];
 			}
-	
+			
+			$menus = $this->get_menu_entry( $post );
+
+			if ( ! empty( $menus ) ) {
+				$out['data']['menus'] = $menus;
+			}
+
 			$posts_array[] = $out;
 		}
-	
-		return $posts_array ;
-	
-	
-		// {
-		// 	"id": "blog-best-and-worst",
-		// 	"type": "object",
-		// 	"data": {
-		// 		"post_title": "The Best (and Worst) Canadian Merchant Account Providers",
-		// 		"post_content": "<!-- wp:paragraph --><p>Nice one.</p><!-- /wp:paragraph -->",
-		// 		"featured_image": "http://f6ca679df901af69ace6-d3d26a34307edc4f7eeb40d85a64c4a7.r91.cf5.rackcdn.com/jobify-xml-images/blog-1.jpg",
-		// 		"terms": {
-		// 			"category": [
-		// 				"development",
-		// 				"news"
-		// 			]
-		// 		}
-		// 	}
-		// }
+		return $this->replace_images_with_placeholder( $posts_array );
 	}
 }

@@ -13,7 +13,8 @@ class Type_Product extends Base_Type {
 		
 		$args = array(
 			'post_type' => 'product',
-			'post_status' => array('publish' )    
+			'post_status' => array('publish' ),
+			'posts_per_page' => -1
 		);
 		$loop = new \WP_Query($args);
 	
@@ -64,6 +65,7 @@ class Type_Product extends Base_Type {
 				$ids = explode( ',', $ids );
 				foreach( $ids as $id ) {
 					$out[ 'data' ]['media'][] = $placeholder; // wp_get_attachment_url( $id );
+					break;
 				}
 			}
 	
@@ -110,28 +112,17 @@ class Type_Product extends Base_Type {
 			if ( metadata_exists( 'post', $post->ID, '_astoundify_favorites_count' ) && ! empty( get_post_meta( $post->ID, '_astoundify_favorites_count', true ) ) ) {
 				$out[ 'data' ]['meta']['_astoundify_favorites_count'] = get_post_meta( $post->ID, '_astoundify_favorites_count', true );
 			}
-	
+
+			$menus = $this->get_menu_entry( $post );
+
+			if ( ! empty( $menus ) ) {
+				$out['data']['menus'] = $menus;
+			}
+			
 			$posts_array[] = $out;
 		}
-	
-		return $posts_array ;
-	
-	
-		// {
-		// 	"id": "blog-best-and-worst",
-		// 	"type": "object",
-		// 	"data": {
-		// 		"post_title": "The Best (and Worst) Canadian Merchant Account Providers",
-		// 		"post_content": "<!-- wp:paragraph --><p>Nice one.</p><!-- /wp:paragraph -->",
-		// 		"featured_image": "http://f6ca679df901af69ace6-d3d26a34307edc4f7eeb40d85a64c4a7.r91.cf5.rackcdn.com/jobify-xml-images/blog-1.jpg",
-		// 		"terms": {
-		// 			"category": [
-		// 				"development",
-		// 				"news"
-		// 			]
-		// 		}
-		// 	}
-		// }
+
+		return $this->replace_images_with_placeholder( $posts_array );
 	}
 }
 
